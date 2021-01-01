@@ -1,0 +1,106 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+
+/* body {
+  background: linear-gradient(to right, #b92b27, #1565c0);
+} */
+.card-body p {
+  color: black;
+}
+.about {
+  color: black;
+}
+.div1 {
+  text-align: center;
+  font-weight: bolder;
+  color: aqua;
+}
+
+.temp {
+  background-color: white;
+  font-family: "Times New Roman", Times, serif;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.content h1 {
+  max-width: 50vw;
+  text-align: center;
+}
+
+.content p {
+  max-width: 60vw;
+  text-align: center;
+  color: black;
+}
+
+.animate {
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+button:hover {
+  background-color: none;
+}
+
+#carouselExampleIndicators .carousel-item img {
+  width: 10vw;
+}
+
+.carousel-item {
+  transition: transform 0.3s ease;
+}
+
+#info-box p {
+  color: red;
+  font-size: 4vw;
+}
+
+#info-box button {
+  font-size: 4vw;
+}
+
+#info-box {
+  background-color: rgb(226, 217, 209);
+  border: 1px solid rgb(226, 217, 209);
+}
+
+.Modal {
+  color: black;
+}
+
+.close {
+  color: red;
+  opacity: 1;
+}
+.modal-dialog .close:hover {
+  background-color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .home {
+    font-size: 5vw !important;
+  }
+  .row-img {
+    height: 50%;
+    width: 60%;
+    align-items: center;
+  }
+  .card-body p {
+    font-size: 3vw !important;
+  }
+
+  .about {
+    font-size: 3vw !important;
+  }
+
+  .card-body h5 {
+    font-size: 5vw !important;
+  }
+}

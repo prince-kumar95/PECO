@@ -1,0 +1,87 @@
+.wrapper::after {
+  content: "";
+  background: url("../imgs/contact.jpg");
+  opacity: 0.6;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+.contact-us {
+  font-size: 1.5vw;
+  margin-top: 3vw;
+}
+
+.address span {
+  color: blue;
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  padding-top: 10vw;
+}
+
+.icons {
+  width: 2vw;
+  height: 2vw;
+  margin: 1vw;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+}
+
+.info {
+  vertical-align: middle;
+}
+.inputs {
+  margin-left: 2vw;
+  text-align: start;
+}
+.inputs input {
+  margin-bottom: 0.5vw;
+  border: none;
+  border-bottom: 0.5vw solid #eee;
+}
+
+.inputs input:focus {
+  margin-bottom: 0.5vw;
+  border: none;
+  border-bottom: 0.5vw solid #7b1fa2;
+  box-shadow: none;
+}
+
+.inputs textarea {
+  margin-bottom: 0.5vw;
+  border: none;
+  border-bottom: 0.5vw solid #eee;
+  width: 100%;
+  resize: none;
+}
+
+.inputs textarea:focus {
+  margin-bottom: 0.5vw;
+  border: none;
+  border-bottom: 0.5vw solid #7b1fa2;
+  box-shadow: none;
+  resize: none;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .address {
+    width: 100%;
+    font-size: 4vw;
+  }
+
+  .icons {
+    width: 2vw;
+    margin: 3vw;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+  }
+}
