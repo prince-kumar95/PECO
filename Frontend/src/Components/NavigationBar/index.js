@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BrandImage from "../imgs/favicon.jpg";
 
 export default class Navigation extends React.Component {
   render() {
@@ -9,6 +10,9 @@ export default class Navigation extends React.Component {
           style={{ color: "black" }}
           className=" navbar navbar-expand-lg navbar-light fixed-top"
         >
+          <a className="navbar-brand" href="/">
+            <img src={BrandImage} alt="" width="30" height="24" />
+          </a>
           <Link className="navbar-brand px-1 fs-2 fw-bold" to="/home">
             P E C O{" "}
           </Link>
