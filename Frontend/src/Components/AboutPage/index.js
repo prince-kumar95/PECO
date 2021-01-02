@@ -11,6 +11,9 @@ import hosted from "../imgs/hosted.png";
 import deliver from "../imgs/deliver.png";
 
 export default class About extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <>
@@ -85,7 +88,7 @@ export default class About extends React.Component {
             className="fw-bolder"
           >
             {" "}
-            Our Creddentials
+            Our Credentials
           </h1>
           <ul>
             <li style={{ display: "flex", alignItems: "center" }}>

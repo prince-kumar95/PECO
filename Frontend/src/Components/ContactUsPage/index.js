@@ -19,6 +19,10 @@ export default class Contact extends React.Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   handleClick = async () => {
     if (
       this.state.email !== "" &&
@@ -259,6 +263,7 @@ export default class Contact extends React.Component {
               </div>
             </div>
           </div>
+          <br />
         </div>
         <Footer />
       </>

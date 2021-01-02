@@ -57,9 +57,8 @@ app.post("/contact-us", async (req, res) => {
   var mailOptions = {
     from: "pk9741622@gmail.com",
     to: `${email}`,
-    subject: "Sending Email using Node.js",
-    text: "That was easy!",
-    html: "<h1>Congrats!</h1>",
+    subject: '"Application Received!!"',
+    html: `<p>Greetings from PECO</p><p>We have received your application regarding <strong>${natureOfEvent}</strong>. We will be processing your application and our event organising team will shortly get in touch with you on ${phNo}<p/><br><p>Here is your application details</p><p><strong>Name :</strong> ${name}</p><p><strong>E-mail :</strong> ${email}</p><p><strong>Phone Number :</strong> ${phNo}</p><p><strong>Date Of Event :</strong> ${date}</p><p><strong>Nature Of Event :</strong>${natureOfEvent}</p><p><strong>Message :</strong>${message}</p>`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -72,14 +71,6 @@ app.post("/contact-us", async (req, res) => {
       });
     }
   });
-  // await client.messages;
-  // client.messages
-  //   .create({
-  //     to: "+919606172957",
-  //     from: "+14159937388",
-  //     body: "Hello out there",
-  //   })
-  //   .then((message) => console.log(message.sid));
 });
 
 app.listen(port, () => {

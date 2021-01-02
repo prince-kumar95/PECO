@@ -4,6 +4,9 @@ import NavigationBar from "../NavigationBar";
 import Footer from "../Footer";
 
 export default class Location extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <>

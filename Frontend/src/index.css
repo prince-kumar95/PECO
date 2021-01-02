@@ -103,4 +103,8 @@ button:hover {
   .card-body h5 {
     font-size: 5vw !important;
   }
+
+  .breadcrumb {
+    padding-top: 7vw !important;
+  }
 }

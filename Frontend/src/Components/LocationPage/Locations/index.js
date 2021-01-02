@@ -1,6 +1,7 @@
 import React from "react";
 import Intermediate from "./intermediat";
 import NavigationBar from "../../NavigationBar";
+import Breadcrumb from "../../Breadcrumb";
 
 export default class Locations extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export default class Locations extends React.Component {
       "octaveSuits",
     ];
   }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     const location = window.location.pathname;
     const title = location.substring(location.lastIndexOf("/") + 1);
@@ -25,6 +29,7 @@ export default class Locations extends React.Component {
     return (
       <>
         <NavigationBar />
+        <Breadcrumb page={window.location.pathname} />
         <Intermediate index={index} />
       </>
     );

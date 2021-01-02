@@ -67,6 +67,7 @@ export default class Template extends React.Component {
       </>
     );
   }
+  
   render() {
     return (
       <>
@@ -79,7 +80,7 @@ export default class Template extends React.Component {
                 fontSize: "5vw",
                 color: "blue",
                 fontFamily: "-moz-initial",
-                paddingRight:"5vw"
+                paddingRight: "5vw",
               }}
               className="text-center"
             >

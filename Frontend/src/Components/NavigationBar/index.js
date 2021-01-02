@@ -7,7 +7,7 @@ export default class Navigation extends React.Component {
       <>
         <nav
           style={{ color: "black" }}
-          className="navbar navbar-expand-lg navbar-light fixed-top"
+          className=" navbar navbar-expand-lg navbar-light fixed-top"
         >
           <Link className="navbar-brand px-1 fs-2 fw-bold" to="/home">
             P E C O{" "}

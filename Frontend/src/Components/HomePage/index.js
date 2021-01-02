@@ -5,11 +5,18 @@ import HomePage from "./home";
 import NavigationBar from "../NavigationBar";
 
 export default class Home extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <>
         <NavigationBar />
-        <img src={HomeBanner} style={{ width: 100 + "vw", height:"40vw" }} alt="Home Banner" />
+        <img
+          src={HomeBanner}
+          style={{ opacity: 0.7, width: 100 + "vw", height: "40vw" }}
+          alt="Home Banner"
+        />
         <hr className="mx-auto" style={{ maxWidth: 90 + "%" }}></hr>
         <p
           style={{
