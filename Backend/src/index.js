@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 var nodemailer = require("nodemailer");
+const emailValidator = require("deep-email-validator");
 
 app.use(express.json());
 app.use(cors());
@@ -31,46 +32,86 @@ const enquirySchema = new mongoose.Schema({
 //user Model
 const enquiryModel = db.model("enquiry", enquirySchema);
 
+async function isEmailValid(email) {
+  return emailValidator.validate(email);
+}
+
 app.post("/contact-us", async (req, res) => {
-  const { name, email, phNo, date, natureOfEvent, message } = req.body;
-  const newEnquiry = new enquiryModel({
+  const {
     name,
     email,
     phNo,
     date,
     natureOfEvent,
     message,
-  });
-  await newEnquiry.save();
+    isVerified,
+  } = req.body;
+  console.log(req.body);
+  if (email !== "" && phNo !== "" && natureOfEvent !== "") {
+    if (phNo.length === 10) {
+      if (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email)) {
+        const { valid, reason, validators } = await isEmailValid(email);
+        if (valid) {
+          if (isVerified) {
+            const newEnquiry = new enquiryModel({
+              name,
+              email,
+              phNo,
+              date,
+              natureOfEvent,
+              message,
+            });
+            await newEnquiry.save();
 
-  //to send an email
-  var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      user: "pk9741622@gmail.com",
-      pass: "qwerty@123",
-    },
-  });
+            //to send an email
 
-  var mailOptions = {
-    from: "pk9741622@gmail.com",
-    to: `${email}`,
-    subject: '"Application Received!!"',
-    html: `<p>Greetings from PECO</p><p>We have received your application regarding <strong>${natureOfEvent}</strong>. We will be processing your application and our event organising team will shortly get in touch with you on ${phNo}<p/><br><p>Here is your application details</p><p><strong>Name :</strong> ${name}</p><p><strong>E-mail :</strong> ${email}</p><p><strong>Phone Number :</strong> ${phNo}</p><p><strong>Date Of Event :</strong> ${date}</p><p><strong>Nature Of Event :</strong>${natureOfEvent}</p><p><strong>Message :</strong>${message}</p>`,
-  };
+            var transporter = nodemailer.createTransport({
+              host: "smtp.gmail.com",
+              port: 465,
+              secure: true,
+              auth: {
+                user: "pk9741622@gmail.com",
+                pass: "qwerty@123",
+              },
+            });
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log("error ", error);
+            var mailOptions = {
+              from: "pk9741622@gmail.com",
+              to: `${email}`,
+              subject: '"Application Received!!"',
+              html: `<p>Greetings from PECO</p><p>We have received your application regarding <strong>${natureOfEvent}</strong>. We will be processing your application and our event organising team will shortly get in touch with you on ${phNo}<p/><br><p>Here is your application details</p><p><strong>Name :</strong> ${name}</p><p><strong>E-mail :</strong> ${email}</p><p><strong>Phone Number :</strong> ${phNo}</p><p><strong>Date Of Event :</strong> ${date}</p><p><strong>Nature Of Event :</strong>${natureOfEvent}</p><p><strong>Message :</strong>${message}</p>`,
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log("error ", error);
+              } else {
+                res.status(201).send({
+                  success:
+                    "Your Enquiry has been submitted! A confirmation email with your enguiry details have been sent to your registered email Id",
+                });
+              }
+            });
+          } else {
+            res.status(400).send({ err: "Please Verify yourself!" });
+          }
+        } else {
+          res.status(400).send({
+            err: "Please provide a valid email address.",
+            reason: validators[reason].reason,
+          });
+        }
+      } else {
+        res
+          .status(400)
+          .send({ err: "Please enter a email address in correct format!" });
+      }
     } else {
-      res.status(201).send({
-        success:
-          "Your Enquiry has been submitted! A confirmation email with your enguiry details have been sent to your registered email Id",
-      });
+      res.status(400).send({ err: "Please Enter a 10 digit Phone Number!" });
     }
-  });
+  } else {
+    res.status(400).send({ err: "Please fill in the required fields!" });
+  }
 });
 
 app.listen(port, () => {

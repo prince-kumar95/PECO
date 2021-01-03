@@ -24,61 +24,41 @@ export default class Contact extends React.Component {
   }
 
   handleClick = async () => {
-    if (
-      this.state.email !== "" &&
-      this.state.phNo !== "" &&
-      this.state.natureOfEvent !== ""
-    ) {
-      if (this.state.phNo.length === 10) {
-        if (
-          new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
-            this.state.email
-          )
-        ) {
-          if (this.state.isVerified) {
-            fetch("http://localhost:9999/contact-us", {
-              method: "POST",
-              body: JSON.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                phNo: this.state.phNo,
-                date: this.state.date.split("T")[0],
-                natureOfEvent: this.state.natureOfEvent,
-                message: this.state.message,
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8",
-              },
-            })
-              .then((response) => response.json())
-              .then((json) => alert(json.success));
-
-            this.setState({
-              isVerified: false,
-              name: "",
-              email: "",
-              phNo: "",
-              date: "",
-              natureOfEvent: "",
-              message: "",
-              error: "",
-            });
-            this.state.recaptchaInstance.reset();
-          } else {
-            this.setState({ error: "Please verify urself!" });
-          }
+    fetch("http://localhost:9999/contact-us", {
+      method: "POST",
+      body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        phNo: this.state.phNo,
+        date: this.state.date.split("T")[0],
+        natureOfEvent: this.state.natureOfEvent,
+        message: this.state.message,
+        isVerified: this.state.isVerified,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.err) {
+          this.setState({ error: json.err, isVerified: false });
         } else {
-          this.setState({ error: "Please enter a valid E-mail address" });
-          this.state.recaptchaInstance.reset();
+          alert(json.success);
+          this.setState({
+            isVerified: false,
+            name: "",
+            email: "",
+            phNo: "",
+            date: "",
+            natureOfEvent: "",
+            message: "",
+            error: "",
+          });
         }
-      } else {
-        this.setState({ error: "please Enter a 10 digit phone Number" });
-        this.state.recaptchaInstance.reset();
-      }
-    } else {
-      this.setState({ error: "Please fill in the required fields!" });
-      this.state.recaptchaInstance.reset();
-    }
+      });
+
+    this.state.recaptchaInstance.reset();
   };
 
   verifyCallback = (response) => {
