@@ -16,6 +16,21 @@ export default class Contact extends React.Component {
       natureOfEvent: "",
       message: "",
       error: "",
+      chooseEvent: "Choose Event",
+      items: [
+        "Wedding",
+        "Birthday",
+        "Fashion Events",
+        "Meeting Events",
+        "Annual Days",
+        "Family Days",
+        "Corporate Parties",
+        "Award Shows",
+        "Employee Engagement and Fun Days",
+        "Product / Brand / Facility Launches",
+        "Customer Meets / Dealer Meets",
+        "Conference and Exhibitions",
+      ],
     };
   }
 
@@ -31,7 +46,7 @@ export default class Contact extends React.Component {
         email: this.state.email,
         phNo: this.state.phNo,
         date: this.state.date.split("T")[0],
-        natureOfEvent: this.state.natureOfEvent,
+        natureOfEvent: this.state.chooseEvent,
         message: this.state.message,
         isVerified: this.state.isVerified,
       }),
@@ -67,7 +82,9 @@ export default class Contact extends React.Component {
     }
   };
 
-  callback = () => {};
+  callback = () => {
+    console.log("Captcha Loaded");
+  };
 
   render() {
     return (
@@ -139,9 +156,14 @@ export default class Contact extends React.Component {
                               >
                                 EQUIRY FORM
                               </h5>
+
+                              <p className="req" style={{ fontSize: "1vw" }}>
+                                <span style={{ color: "red" }}>* </span>Required
+                                Fields
+                              </p>
                               <div className="inputs">
                                 {" "}
-                                <h6>Name</h6>
+                                <h6 className="font-weight-bold">Name</h6>
                                 <input
                                   type="text"
                                   className="form-control"
@@ -151,22 +173,27 @@ export default class Contact extends React.Component {
                                     this.setState({ name: e.target.value })
                                   }
                                 />{" "}
-                                <h6>E-mail</h6>
+                                <h6 className="font-weight-bold">
+                                  E-mail<span style={{ color: "red" }}> *</span>
+                                </h6>
                                 <input
                                   type="email"
                                   className="form-control"
-                                  placeholder="Email *"
+                                  placeholder="Email"
                                   value={this.state.email}
                                   required
                                   onChange={(e) =>
                                     this.setState({ email: e.target.value })
                                   }
                                 />{" "}
-                                <h6>Mobile No.</h6>
+                                <h6 className="font-weight-bold">
+                                  Mobile No.
+                                  <span style={{ color: "red" }}> *</span>
+                                </h6>
                                 <input
                                   type="tel"
                                   className="form-control"
-                                  placeholder="Phone Number *"
+                                  placeholder="Phone Number"
                                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                   minLength="10"
                                   maxLength="10"
@@ -176,7 +203,9 @@ export default class Contact extends React.Component {
                                     this.setState({ phNo: e.target.value })
                                   }
                                 />{" "}
-                                <h6>Data of Event</h6>
+                                <h6 className="font-weight-bold">
+                                  Date of Event
+                                </h6>
                                 <input
                                   type="date"
                                   className="form-control"
@@ -189,20 +218,43 @@ export default class Contact extends React.Component {
                                     })
                                   }
                                 />{" "}
-                                <h6>Nature Of Event</h6>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Nature Of Event *"
-                                  value={this.state.natureOfEvent}
-                                  required
-                                  onChange={(e) =>
-                                    this.setState({
-                                      natureOfEvent: e.target.value,
-                                    })
-                                  }
-                                />{" "}
-                                <h6>Message</h6>
+                                <h6 className="font-weight-bold">
+                                  Nature Of Event
+                                  <span style={{ color: "red" }}> *</span>
+                                </h6>
+                                <div>
+                                  <button
+                                    className="dropdown-toggle form-control show text-left"
+                                    type="button"
+                                    id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    {this.state.chooseEvent}
+                                  </button>
+                                  <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton"
+                                  >
+                                    {" "}
+                                    {this.state.items.map((ele, idx) => {
+                                      return (
+                                        <li
+                                          key={idx}
+                                          className=" btn dropdown-item"
+                                          onClick={() =>
+                                            this.setState({
+                                              chooseEvent: ele,
+                                            })
+                                          }
+                                        >
+                                          {ele}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                </div>
+                                <h6 className="font-weight-bold">Message</h6>
                                 <textarea
                                   className="form-control"
                                   placeholder="Type your message"

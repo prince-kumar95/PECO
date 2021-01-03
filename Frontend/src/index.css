@@ -95,4 +95,30 @@ button:hover {
   .breadcrumb {
     padding-top: 7vw !important;
   }
+  .contact-us {
+    padding-top: 8vw !important;
+  }
+
+  .req {
+    font-size: 3vw !important;
+  }
+
+  .credentials ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .credentials ul li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .credentials img {
+    width: 40vw;
+    height: auto;
+  }
+
+  .credentials span {
+    padding-left: 0vw !important;
+  }
 }

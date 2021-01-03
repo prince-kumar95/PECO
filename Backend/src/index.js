@@ -14,10 +14,13 @@ const port = 9999;
 // const client = require("twilio")(accountSid, authToken);
 
 //Connection to DB
-const db = mongoose.createConnection("mongodb://localhost:27017/PECO", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const db = mongoose.createConnection(
+  "mongodb+srv://prince:Kumarprince@123@peco.hy9kv.mongodb.net/PECO?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 //enquiry Schema
 const enquirySchema = new mongoose.Schema({
