@@ -19,7 +19,7 @@ const port = process.env.PORT || 9999;
 
 //Connection to DB
 const db = mongoose.createConnection(
-  "mongodb+srv://prince:Kumarprince@123@peco.hy9kv.mongodb.net/PECO?retryWrites=true&w=majority",
+  "mongodb+srv://prince:<password>@peco.hy9kv.mongodb.net/<dbname>?retryWrites=true&w=majority",
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 
@@ -75,8 +75,8 @@ app.post("/contact-us", async (req, res) => {
               secureConnection: false, // use SSL
               port: 587, // port for secure SMTP
               auth: {
-                user: "pecoOfficial@outlook.com",
-                pass: "peco@123",
+                user: "email id",
+                pass: "email password",
               },
               tls: {
                 ciphers: "SSLv3",
