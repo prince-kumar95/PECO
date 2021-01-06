@@ -17,6 +17,7 @@ export default class Contact extends React.Component {
       message: "",
       error: "",
       chooseEvent: "Choose Event",
+      loading: false,
       items: [
         "Wedding",
         "Birthday",
@@ -39,7 +40,7 @@ export default class Contact extends React.Component {
   }
 
   handleClick = async () => {
-    fetch("http://localhost:9999/contact-us", {
+    fetch("https://pe-co-backend.herokuapp.com/contact-us", {
       method: "POST",
       body: JSON.stringify({
         name: this.state.name,
@@ -52,14 +53,17 @@ export default class Contact extends React.Component {
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST",
       },
     })
       .then((response) => response.json())
       .then((json) => {
         if (json.err) {
-          this.setState({ error: json.err, isVerified: false });
+          this.setState({ error: json.err, isVerified: false, loading: false });
         } else {
           alert(json.success);
+
           this.setState({
             isVerified: false,
             name: "",
@@ -69,11 +73,16 @@ export default class Contact extends React.Component {
             natureOfEvent: "",
             message: "",
             error: "",
+            loading: false,
           });
         }
       });
 
     this.state.recaptchaInstance.reset();
+  };
+
+  showLoader= () => {
+    this.setState({ loading: true });
   };
 
   verifyCallback = (response) => {
@@ -279,10 +288,22 @@ export default class Contact extends React.Component {
                               <div className="button">
                                 {" "}
                                 <button
-                                  onClick={this.handleClick}
+                                  onClick={() => {
+                                    this.showLoader();
+                                    this.handleClick();
+                                  }}
                                   className="btn btn-primary"
                                 >
-                                  Send
+                                  {this.state.loading && (
+                                    <i
+                                      className="fa fa-refresh fa-spin"
+                                      style={{ marginRight: "5px" }}
+                                    />
+                                  )}
+                                  {this.state.loading && (
+                                    <span>Please Wait...</span>
+                                  )}
+                                  {!this.state.loading && <span>Send</span>}
                                 </button>{" "}
                               </div>
                             </div>

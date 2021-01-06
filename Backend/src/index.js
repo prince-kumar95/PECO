@@ -7,19 +7,20 @@ const emailValidator = require("deep-email-validator");
 
 app.use(express.json());
 app.use(cors());
-const port = 9999;
 
-// const accountSid = "ACe1456a8ad68ba997d39a9e46e8e1d2fa";
-// const authToken = "b109ce403e1bc2c1211823e6c0df60c7";
-// const client = require("twilio")(accountSid, authToken);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Acces-Control-Allow-header", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "POST");
+  next();
+});
+
+const port = process.env.PORT || 9999;
 
 //Connection to DB
 const db = mongoose.createConnection(
   "mongodb+srv://prince:Kumarprince@123@peco.hy9kv.mongodb.net/PECO?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 
 //enquiry Schema
@@ -64,22 +65,26 @@ app.post("/contact-us", async (req, res) => {
               natureOfEvent,
               message,
             });
+
             await newEnquiry.save();
 
             //to send an email
 
             var transporter = nodemailer.createTransport({
-              host: "smtp.gmail.com",
-              port: 465,
-              secure: true,
+              host: "smtp.live.com", // hostname
+              secureConnection: false, // use SSL
+              port: 587, // port for secure SMTP
               auth: {
-                user: "pk9741622@gmail.com",
-                pass: "qwerty@123",
+                user: "pecoOfficial@outlook.com",
+                pass: "peco@123",
+              },
+              tls: {
+                ciphers: "SSLv3",
               },
             });
 
             var mailOptions = {
-              from: "pk9741622@gmail.com",
+              from: "pecoOfficial@outlook.com",
               to: `${email}`,
               subject: '"Application Received!!"',
               html: `<p>Greetings from PECO</p><p>We have received your application regarding <strong>${natureOfEvent}</strong>. We will be processing your application and our event organising team will shortly get in touch with you on ${phNo}<p/><br><p>Here is your application details</p><p><strong>Name :</strong> ${name}</p><p><strong>E-mail :</strong> ${email}</p><p><strong>Phone Number :</strong> ${phNo}</p><p><strong>Date Of Event :</strong> ${date}</p><p><strong>Nature Of Event :</strong>${natureOfEvent}</p><p><strong>Message :</strong>${message}</p>`,
@@ -87,11 +92,12 @@ app.post("/contact-us", async (req, res) => {
 
             transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
-                console.log("error ", error);
+                console.log("Error! ", error);
+                res.status(400).send({ err: "An error occured in SendMail" });
               } else {
                 res.status(201).send({
                   success:
-                    "Your Enquiry has been submitted! A confirmation email with your enguiry details have been sent to your registered email Id",
+                    "Your Enquiry has been submitted!. You will receieve a confirmation email soon. Don't forget to check your SPAM folder.",
                 });
               }
             });
@@ -117,6 +123,8 @@ app.post("/contact-us", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server Running on port ${port}`);
+app.get("/", async (req, res) => {
+  res.send("Server Works!");
 });
+
+app.listen(port);
